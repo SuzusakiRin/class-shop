@@ -1,107 +1,48 @@
-/* リセットスタイル */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+const inventory = [
+    { name: 'ノート', price: 150, quantity: 10 },
+    { name: 'ペン', price: 100, quantity: 20 },
+    { name: '鉛筆', price: 80, quantity: 30 },
+];
+
+function renderInventory() {
+    const inventoryTableBody = document.querySelector('#inventory-table tbody');
+    inventoryTableBody.innerHTML = '';
+
+    inventory.forEach((item, index) => {
+        const row = document.createElement('tr');
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = item.name;
+        row.appendChild(nameCell);
+
+        const priceCell = document.createElement('td');
+        priceCell.textContent = `¥${item.price}`;
+        row.appendChild(priceCell);
+
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = item.quantity;
+        row.appendChild(quantityCell);
+
+        inventoryTableBody.appendChild(row);
+    });
 }
 
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+document.getElementById('add-item-form').addEventListener('submit', (event) => {
+    event.preventDefault();
 
-header {
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-    padding: 1em 0;
-    margin-bottom: 1em;
-}
+    const itemName = document.getElementById('item-name').value;
+    const itemPrice = parseInt(document.getElementById('item-price').value, 10);
+    const itemQuantity = parseInt(document.getElementById('item-quantity').value, 10);
 
-header h1 {
-    font-size: 2.5em;
-}
+    inventory.push({
+        name: itemName,
+        price: itemPrice,
+        quantity: itemQuantity,
+    });
 
-header h2 {
-    font-size: 1.2em;
-    margin-top: 0.5em;
-}
+    renderInventory();
 
-main {
-    flex: 1;
-    padding: 1em;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
+    document.getElementById('add-item-form').reset();
+});
 
-h3 {
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
-}
-
-.inventory {
-    margin-bottom: 2em;
-}
-
-#inventory-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1em;
-}
-
-#inventory-table th,
-#inventory-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-#inventory-table th {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.add-item form {
-    display: flex;
-    flex-direction: column;
-}
-
-.add-item label {
-    margin-bottom: 0.5em;
-}
-
-.add-item input {
-    margin-bottom: 1em;
-    padding: 0.5em;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.add-item button {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 0.75em;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.add-item button:hover {
-    background-color: #218838;
-}
-
-footer {
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-    padding: 1em 0;
-    margin-top: auto;
-}
+renderInventory();
