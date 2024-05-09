@@ -1,48 +1,33 @@
-const inventory = [
-    { name: 'ノート', price: 150, quantity: 10 },
-    { name: 'ペン', price: 100, quantity: 20 },
-    { name: '鉛筆', price: 80, quantity: 30 },
-];
+// 外部から管理できる在庫状況のデータ
+const stockData = {
+    "商品A": true,
+    "商品B": false,
+    "商品C": true,
+    "商品D": false,
+    "商品E": true
+};
 
-function renderInventory() {
-    const inventoryTableBody = document.querySelector('#inventory-table tbody');
-    inventoryTableBody.innerHTML = '';
+// 在庫状況を表示する関数
+function displayStockStatus() {
+    const itemsContainer = document.getElementById('items');
+    itemsContainer.innerHTML = '';
 
-    inventory.forEach((item, index) => {
-        const row = document.createElement('tr');
+    for (const [item, inStock] of Object.entries(stockData)) {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'item';
 
-        const nameCell = document.createElement('td');
-        nameCell.textContent = item.name;
-        row.appendChild(nameCell);
+        const nameElement = document.createElement('span');
+        nameElement.textContent = item;
 
-        const priceCell = document.createElement('td');
-        priceCell.textContent = `¥${item.price}`;
-        row.appendChild(priceCell);
+        const statusElement = document.createElement('span');
+        statusElement.className = 'status ' + (inStock ? 'in-stock' : 'out-of-stock');
+        statusElement.textContent = inStock ? '在庫あり' : '在庫なし';
 
-        const quantityCell = document.createElement('td');
-        quantityCell.textContent = item.quantity;
-        row.appendChild(quantityCell);
-
-        inventoryTableBody.appendChild(row);
-    });
+        itemElement.appendChild(nameElement);
+        itemElement.appendChild(statusElement);
+        itemsContainer.appendChild(itemElement);
+    }
 }
 
-document.getElementById('add-item-form').addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const itemName = document.getElementById('item-name').value;
-    const itemPrice = parseInt(document.getElementById('item-price').value, 10);
-    const itemQuantity = parseInt(document.getElementById('item-quantity').value, 10);
-
-    inventory.push({
-        name: itemName,
-        price: itemPrice,
-        quantity: itemQuantity,
-    });
-
-    renderInventory();
-
-    document.getElementById('add-item-form').reset();
-});
-
-renderInventory();
+// 初期表示
+displayStockStatus();

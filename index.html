@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>教室内販売所 - 在庫管理</title>
+    <title>教室内の販売所 在庫状況</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,40 +11,6 @@
         <h1>在庫状況</h1>
         <div id="items"></div>
     </div>
-    <script>
-        // 外部から管理できる在庫状況のデータ
-        const stockData = {
-            "商品A": true,
-            "商品B": false,
-            "商品C": true,
-            "商品D": false,
-            "商品E": true
-        };
-
-        // 在庫状況を表示する関数
-        function displayStockStatus() {
-            const itemsContainer = document.getElementById('items');
-            itemsContainer.innerHTML = '';
-
-            for (const [item, inStock] of Object.entries(stockData)) {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'item';
-
-                const nameElement = document.createElement('span');
-                nameElement.textContent = item;
-
-                const statusElement = document.createElement('span');
-                statusElement.className = 'status ' + (inStock ? 'in-stock' : 'out-of-stock');
-                statusElement.textContent = inStock ? '在庫あり' : '在庫なし';
-
-                itemElement.appendChild(nameElement);
-                itemElement.appendChild(statusElement);
-                itemsContainer.appendChild(itemElement);
-            }
-        }
-
-        // 初期表示
-        displayStockStatus();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
